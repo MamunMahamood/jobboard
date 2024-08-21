@@ -15,7 +15,7 @@ Route::get('/dashboard', function () {
 
 
 
-Route::get('/save', [AjobController::class, 'save']);
+Route::post('save', [AjobController::class, 'save'])->name('ajob-save');
 Route::get('add-ajob', [AjobController::class, 'create'])->name('post-job');
 Route::post('add-ajob', [AjobController::class, 'store']);
 Route::get('/jobs/{id}', [AjobController::class, 'show'])->name('ajob-show');

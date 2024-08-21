@@ -9,9 +9,14 @@ use App\Models\Ajob;
 
 class AjobController extends Controller
 {
-    public function save(){
-        $user = User::find(1);
-        $user->ajobs()->attach(1);
+    public function save(Request $request){
+        $user = User::find($request->user_id);
+        $user->ajobs()->attach($request->ajob_id);
+        $job_id = $request->ajob_id;
+        return redirect()->back()->with('success', 'Job created successfully!');
+
+
+        
     }
 
 

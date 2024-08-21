@@ -70,7 +70,14 @@
 
             <div class="row mb-5">
               <div class="col-6">
-                <button class="btn btn-block btn-light btn-md"><i class="icon-heart"></i>Save Job</button>
+                 <form action="{{ route('ajob-save') }}" method="POST">
+                   @csrf
+
+                   <input type="hidden" class="form-control" id="user_id" name="user_id" value="{{ Auth::user()->id }}">
+                   <input type="hidden" class="form-control" id="ajob_id" name="ajob_id" value="{{ $job->id }}">
+                   <button name="submit" type="submit" class="btn btn-block btn-light btn-md"><i class="icon-heart"></i>Save Job</button>
+                 </form>
+                
                 <!--add text-danger to it to make it read-->
               </div>
               <div class="col-6">
