@@ -28,7 +28,7 @@
           <div class="col-lg-8 mb-4 mb-lg-0">
             <div class="d-flex align-items-center">
               <div class="border p-2 d-inline-block mr-3 rounded">
-                <img src="{{ $job->jobimg }}" alt="Image" >
+                <img src="{{ $job->jobimg }}" alt="Image" width="120">
               </div>
               <div>
                 <h2>{{ $job->job_title }}</h2>
@@ -68,20 +68,37 @@
               <p>{{ $job->other_benefits }}</p>
             </div>
 
+
+            @php
+             $isSaved = Auth::user()->ajobs()->where('ajob_id', $job->id)->exists();
+            @endphp
+
             <div class="row mb-5">
               <div class="col-6">
                  <form action="{{ route('ajob-save') }}" method="POST">
                    @csrf
 
+                   @auth
                    <input type="hidden" class="form-control" id="user_id" name="user_id" value="{{ Auth::user()->id }}">
                    <input type="hidden" class="form-control" id="ajob_id" name="ajob_id" value="{{ $job->id }}">
-                   <button name="submit" type="submit" class="btn btn-block btn-light btn-md"><i class="icon-heart"></i>Save Job</button>
+                   @else
+                   <input type="hidden" class="form-control" id="user_id" name="user_id" value="">
+                   <input type="hidden" class="form-control" id="ajob_id" name="ajob_id" value="{{ $job->id }}">
+                   @endauth
+                   <button name="submit" type="submit"  
+                   class="{{ $isSaved ? 'btn btn-block btn-success btn-md' : 'btn btn-block btn-light btn-md' }}" 
+                   {{ $isSaved ? 'disabled' : '' }}>
+                   <i class="icon-heart"></i> 
+                   {{ $isSaved ? 'Job Saved' : 'Save Job' }}
+                   </button>
+
+
                  </form>
                 
                 <!--add text-danger to it to make it read-->
               </div>
               <div class="col-6">
-                <button class="btn btn-block btn-primary btn-md">Apply Now</button>
+                <button class="btn btn-block btn-secondary btn-md">Apply Now</button>
               </div>
             </div>
 
