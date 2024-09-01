@@ -50,12 +50,12 @@
 
         <div class="row mb-5 justify-content-center">
           <div class="col-md-7 text-center">
-            <h2 class="section-title mb-2">{{$totaljobs}}</h2>
+            <h2 class="section-title mb-2">Saved Jobs - {{$total_user_jobs}}</h2>
           </div>
         </div>
         
         <ul class="job-listings mb-5">
-        @foreach($jobs as $job)
+        @foreach($all_user_jobs as $job)
           <li class="job-listing d-block d-sm-flex pb-3 pb-sm-0 align-items-center">
             <a href="{{ route('ajob-show', ['id' => $job->id]) }}"></a>
             <div class="job-listing-logo">

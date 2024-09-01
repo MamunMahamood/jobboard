@@ -5,12 +5,19 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\AjobController;
 
+
 Route::get('/', function () {
     return view('welcome');
 });
 
 Route::get('/dashboard', function () {
-    return view('dashboard');
+    $total_user_jobs = Auth::user()->ajobs()->count(); // Fetch total records count
+    $all_user_jobs = Auth::user()->ajobs()->get();     // Fetch all records
+
+    return view('dashboard', [
+        'total_user_jobs' => $total_user_jobs,
+        'all_user_jobs' => $all_user_jobs,
+    ]);
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 
