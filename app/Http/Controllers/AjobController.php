@@ -1,10 +1,12 @@
 <?php
 
 namespace App\Http\Controllers;
+use Illuminate\Support\Facades\Auth;
 
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Ajob;
+use App\Models\Applydetail;
 
 
 class AjobController extends Controller
@@ -13,6 +15,16 @@ class AjobController extends Controller
         $user = User::find($request->user_id);
         $user->ajobs()->attach($request->ajob_id);
         $job_id = $request->ajob_id;
+        return redirect()->back()->with('success', 'Job created successfully!');
+
+
+        
+    }
+
+    public function apply_job(Request $request){
+        $job = Ajob::find($request->ajob_id);
+        $job->applydetails()->attach($request->applydetail_id);
+        // $job_id = $request->ajob_id;
         return redirect()->back()->with('success', 'Job created successfully!');
 
 
@@ -96,6 +108,7 @@ class AjobController extends Controller
     public function show($id){
 
         $job = Ajob::findOrFail($id);
-        return view('ajob.show', compact('job'));
+        $apply_detail = Applydetail::where('user_id', Auth::user()->id)->first();
+        return view('ajob.show', compact('job', 'apply_detail'));
     }
 }

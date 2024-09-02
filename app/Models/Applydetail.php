@@ -23,6 +23,11 @@ class Applydetail extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function ajobs()
+    {
+        return $this->belongsToMany(Ajob::class);
+    }
 }
 
 

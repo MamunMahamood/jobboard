@@ -97,8 +97,35 @@
                 
                 <!--add text-danger to it to make it read-->
               </div>
+
+              @php
+              $isApplied = $job->applyDetails()->where('ajob_id', $job->id)->exists();
+              
+              @endphp
+
               <div class="col-6">
-                <button class="btn btn-block btn-secondary btn-md">Apply Now</button>
+              <form action="{{ route('apply-job') }}" method="POST">
+                   @csrf
+
+                   @auth
+                   
+                   <input type="hidden" class="form-control" id="ajob_id" name="ajob_id" value="{{ $job->id }}">
+                   <input type="hidden" class="form-control" id="applydetail_id" name="applydetail_id" value="{{ $apply_detail->id }}">
+                   @else
+                   
+                   <input type="hidden" class="form-control" id="ajob_id" name="ajob_id" value="{{ $job->id }}">
+                   <input type="hidden" class="form-control" id="applydetail_id" name="applydetail_id" value="">
+                   @endauth
+                   <button name="submit" type="submit"  
+                   class="{{ $isApplied ? 'btn btn-block btn-success btn-md' : 'btn btn-block btn-light btn-md' }}" 
+                   {{ $isApplied ? 'disabled' : '' }}>
+                   <i class="icon-heart"></i> 
+                   {{ $isSaved ? 'You Applied' : 'Apply Now' }}
+                   </button>
+
+
+                 </form>
+                <!-- <button class="btn btn-block btn-secondary btn-md">Apply Now</button> -->
               </div>
             </div>
 

@@ -29,9 +29,11 @@ Route::get('/dashboard', function () {
 
 
 Route::post('save', [AjobController::class, 'save'])->name('ajob-save')->middleware('auth');
+Route::post('apply', [AjobController::class, 'apply_job'])->name('apply-job')->middleware('auth');
 Route::get('add-ajob', [AjobController::class, 'create'])->name('post-job')->middleware('auth');
 Route::post('add-ajob', [AjobController::class, 'store']);
 Route::get('/jobs/{id}', [AjobController::class, 'show'])->name('ajob-show');
+
 
 
 
