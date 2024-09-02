@@ -45,8 +45,7 @@
             </div>
         </section>
 
-
-        <section class="site-section">
+ <section class="site-section">
       <div class="container">
 
         <div class="row mb-5 justify-content-center">
@@ -95,7 +94,33 @@
      
 
       </div>
-    </section>
+</section>
+
+
+
+
+<section class="site-section">
+      <div class="container">
+
+        <div class="row mb-5 justify-content-center">
+          <div class="col-md-7 text-center">
+            <h2 class="section-title mb-2">Jobs Section</h2>
+          </div>
+        </div>
+        
+        <div class="list-group">
+  
+  <a href="{{ route('saved-jobs') }}" class="list-group-item list-group-item-action">Saved Jobs</a>
+  <a href="{{ route('applied-jobs') }}" class="list-group-item list-group-item-action">Applied Jobs</a>
+  <a href="{{ route('provided-jobs') }}" class="list-group-item list-group-item-action">Provided Jobs</a>
+  <!-- <a class="list-group-item list-group-item-action disabled" aria-disabled="true">A disabled link item</a> -->
+</div>
+
+
+     
+
+      </div>
+</section>
 
 
 

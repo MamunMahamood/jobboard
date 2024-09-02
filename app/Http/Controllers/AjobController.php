@@ -95,6 +95,7 @@ class AjobController extends Controller
             'employment_status' => $validatedData['employment_status'],
             'job_location' => $validatedData['job_location'],
             'company_name' => $validatedData['company_name'],
+            'provided_id' => Auth::user()->id,
             
         ]);
 
@@ -110,5 +111,55 @@ class AjobController extends Controller
         $job = Ajob::findOrFail($id);
         $apply_detail = Applydetail::where('user_id', Auth::user()->id)->first();
         return view('ajob.show', compact('job', 'apply_detail'));
+    }
+
+
+    public function job_section(){
+        return view('ajob.job-section');
+    }
+
+    public function saved_jobs(){
+        $total_user_jobs = Auth::user()->ajobs()->count(); // Fetch total records count
+        $all_user_jobs = Auth::user()->ajobs()->get();     // Fetch all records
+        // $apply_detail = Applydetail::where('user_id', Auth::user()->id)->first();
+
+    return view('ajob.saved-jobs', [
+        'total_user_jobs' => $total_user_jobs,
+        'all_user_jobs' => $all_user_jobs,
+        // 'apply_detail' => $apply_detail,
+    ]);
+    }
+
+    public function applied_jobs(){
+
+        $applydetail = Applydetail::where('user_id', Auth::user()->id)->first();
+        
+        return view('ajob.applied-jobs', [
+            'total_applied_jobs' => $applydetail->ajobs()->count(),
+            'all_applied_jobs' => $applydetail->ajobs()->get(),
+            // 'apply_detail' => $apply_detail,
+        ]);
+    }
+
+    public function provided_jobs(){
+        $provided_jobs = Ajob::where('provided_id', Auth::user()->id );
+        return view('ajob.provided-jobs',[
+            'total_provided_jobs' => $provided_jobs->count(),
+            'all_provided_jobs' => $provided_jobs->get(),
+            // 'apply_detail' => $apply_detail,
+        ]);
+    }
+
+
+
+    public function candidate_list($id){
+        $job = Ajob::findOrFail($id);
+        return view('ajob.candidates',[
+            'total_candidate_list' => $job->applydetails()->count(),
+            'all_candidate_list' => $job->applydetails()->get(),
+            'job' => $job,
+            // 'apply_detail' => $apply_detail,
+        ]);
+
     }
 }
