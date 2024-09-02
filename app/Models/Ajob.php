@@ -32,4 +32,9 @@ class Ajob extends Model
     {
         return $this->belongsToMany(User::class);
     }
+
+    public function applydetails()
+    {
+        return $this->belongsToMany(Applydetail::class);
+    }
 }
