@@ -20,7 +20,7 @@
 
 
 <div class="container my-5">
-<h2 class="section-title mb-2">Saved Jobs - {{$total_provided_jobs}}</h2>
+<h2 class="section-title mb-2">Provided - {{$total_provided_jobs}}</h2>
 
     <!-- Display validation errors, if any -->
     @if ($errors->any())
@@ -36,7 +36,7 @@
 
     
 
-
+<div class="table-responsive">
     <table class="table table-striped">
   <thead>
     <tr>
@@ -63,6 +63,8 @@
    
   </tbody>
 </table>
+
+</div>
 
     
 

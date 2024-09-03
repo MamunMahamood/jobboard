@@ -37,32 +37,44 @@
     
 
 
-    <table class="table table-striped">
-  <thead>
-    <tr>
-      <th scope="col">Serial</th>
-      <th scope="col">job title</th>
-      <th scope="col">Company Name</th>
-      <th scope="col">Employment Status</th>
-      <th scope="col">Dead Line</th>
-      <th scope="col">Action</th>
-    </tr>
-  </thead>
-  <tbody>
-  @foreach($all_user_jobs as $index => $job)
-<tr>
-  <th scope="row">{{ $index + 1 }}</th> <!-- Dynamic Serial Number -->
-  <td>{{ $job->job_title }}</td>
-  <td>{{ $job->company_name }}</td>
-  <td>{{ $job->employment_status }}</td>
-  <td>{{ $job->application_deadline }}</td>
-  <td><a href="{{ route('ajob-show', ['id' => $job->id]) }}"><span class="badge badge-danger">View Detail</span></a></td>
-</tr>
-@endforeach
+    <div class="table-responsive">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">Serial</th>
+        <th scope="col">Job Title</th>
+        <th scope="col">Company Name</th>
+        <th scope="col">Employment Status</th>
+        <th scope="col">Deadline</th>
+        <th scope="col">Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      @foreach($all_user_jobs as $index => $job)
+      <tr>
+        <th scope="row">{{ $index + 1 }}</th> <!-- Dynamic Serial Number -->
+        <td>{{ $job->job_title }}</td>
+        <td>{{ $job->company_name }}</td>
+        <td>{{ $job->employment_status }}</td>
+        <td>{{ $job->application_deadline }}</td>
+        <td>
+          <a href="{{ route('ajob-show', ['id' => $job->id]) }}">
+            <span class="badge badge-danger">View Detail</span>
+          </a>
+        </td>
+      </tr>
+      @endforeach
+    </tbody>
+  </table>
+</div>
 
-   
-  </tbody>
-</table>
+
+
+
+
+
+
+
 
     
 

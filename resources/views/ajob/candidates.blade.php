@@ -20,7 +20,7 @@
 
 
 <div class="container my-5">
-<h2 class="section-title mb-2">Saved Jobs - {{$total_candidate_list}}</h2>
+<h2 class="section-title mb-2">Candidates List - {{$total_candidate_list}}</h2>
 
     <!-- Display validation errors, if any -->
     @if ($errors->any())
@@ -36,7 +36,7 @@
 
     
 
-
+    <div class="table-responsive">
     <table class="table table-striped">
   <thead>
     <tr>
@@ -57,13 +57,17 @@
   <td>{{ $candidate->user->name }}</td>
   
   <td><a href="{{ $candidate->cv }}" target="_blank">View CV</a></td>
-  <td><a href="{{ route('candidate-list', ['id' => $job->id]) }}"><span class="badge badge-danger">Applied Candidates list</span></a></td>
+  <td><a href="{{ route('candidate-profile', ['id' => $candidate->user->id]) }}"><span class="badge badge-danger">See Profile</span></a></td>
+
 </tr>
 @endforeach
 
    
   </tbody>
 </table>
+
+
+</div>
 
     
 

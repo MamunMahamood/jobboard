@@ -109,8 +109,12 @@ class AjobController extends Controller
     public function show($id){
 
         $job = Ajob::findOrFail($id);
+        if (Auth::check()) {
         $apply_detail = Applydetail::where('user_id', Auth::user()->id)->first();
         return view('ajob.show', compact('job', 'apply_detail'));
+        }
+        
+        return view('ajob.show', compact('job'));
     }
 
 
@@ -158,6 +162,19 @@ class AjobController extends Controller
             'total_candidate_list' => $job->applydetails()->count(),
             'all_candidate_list' => $job->applydetails()->get(),
             'job' => $job,
+            // 'apply_detail' => $apply_detail,
+        ]);
+
+    }
+
+
+    public function candidate_profile($id){
+        $candidate = User::findOrFail($id);
+        $apply_detail = Applydetail::where('user_id', $id)->first();
+        return view('ajob.candidate',[
+            'candidate' => $candidate,
+            'apply_candidate' => $apply_detail,
+            
             // 'apply_detail' => $apply_detail,
         ]);
 
