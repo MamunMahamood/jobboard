@@ -39,6 +39,8 @@ Route::get('/dashboard/applied-jobs', [AjobController::class, 'applied_jobs'])->
 Route::get('/dashboard/provided-jobs', [AjobController::class, 'provided_jobs'])->name('provided-jobs');
 Route::get('/dashboard/provided-jobs/{id}', [AjobController::class, 'candidate_list'])->name('candidate-list');
 Route::get('/dashboard/provided-jobs/candidates/{id}', [AjobController::class, 'candidate_profile'])->name('candidate-profile');
+Route::get('/categories/new', [AjobController::class, 'create_cat'])->name('create-cat');
+Route::post('store-cat', [AjobController::class, 'store_cat']);
 
 // Home route
 Route::get('/home', [HomeController::class, 'home'])->name('home.home');

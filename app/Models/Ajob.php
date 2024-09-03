@@ -26,7 +26,8 @@ class Ajob extends Model
         'employment_status',
         'company_name',
         'job_location',
-        'provided_id'
+        'provided_id',
+        'category_id',
     ];
 
     public function users()
