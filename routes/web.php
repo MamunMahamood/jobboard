@@ -38,6 +38,7 @@ Route::get('/dashboard/saved-jobs', [AjobController::class, 'saved_jobs'])->name
 Route::get('/dashboard/applied-jobs', [AjobController::class, 'applied_jobs'])->name('applied-jobs');
 Route::get('/dashboard/provided-jobs', [AjobController::class, 'provided_jobs'])->name('provided-jobs');
 Route::get('/dashboard/provided-jobs/{id}', [AjobController::class, 'candidate_list'])->name('candidate-list');
+Route::get('/dashboard/provided-jobs/candidates/{id}', [AjobController::class, 'candidate_profile'])->name('candidate-profile');
 
 // Home route
 Route::get('/home', [HomeController::class, 'home'])->name('home.home');

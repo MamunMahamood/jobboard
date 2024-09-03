@@ -50,30 +50,35 @@
           <div class="site-logo col-6"><a href="index.html">JobBoard</a></div>
 
           <nav class="mx-auto site-navigation">
-            <ul class="site-menu js-clone-nav d-none d-xl-block ml-0 pl-0">
-              <li><a href="index.html" class="nav-link active">Home</a></li>
-              <li><a href="about.html">About</a></li>
+    <ul class="site-menu js-clone-nav d-none d-xl-block ml-0 pl-0">
+    <li><a href="{{ route('home.home') }}" class="nav-link active">Home</a></li>
+<li><a href="about.html">About</a></li>
+<li><a href="profile.html">Profile</a></li>
+<li><a href="contact.html">Contact</a></li>
+@auth
+<li><a href="{{ route('job-section') }}">Jobs Section</a></li>
+@endauth
 
-              
-              
-              <li><a href="profile.html">Profile</a></li>
-            
-              <li><a href="contact.html">Contact</a></li>
-              <li><a href="{{route('job-section')}}">Jobs Section</a></li>
-              <!-- <li><a href="contact.html">Applied Jobs</a></li>
-              <li><a href="contact.html">Providing Jobs</a></li> -->
-              <li class="d-lg-none"><a href="{{ route('post-job') }}"><span class="mr-2">+</span> Post a Job</a></li>
-              <li class="d-lg-none"><a href="{{ route('login') }}">Log In</a></li>
-              <li class="d-lg-none"><a href="{{ route('logout') }}" onclick="event.preventDefault();
-                                                document.getElementById('logout-form').submit();">
-              
-              </a>
-              <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-               @csrf
-              </form>{{ __('Log Out') }}</li>
-              
-            </ul>
-          </nav>
+<!-- Show these links only when the user is not logged in -->
+@guest
+    <a class="d-lg-none" href="{{ route('login') }}">Log In</a>
+@endguest
+
+<!-- Show these links only when the user is logged in -->
+@auth
+    <a class="d-lg-none" href="{{ route('post-job') }}"><span class="mr-2">+</span> Post a Job</a>
+    <a class="d-lg-none" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+        Log Out
+    </a>
+    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+        @csrf
+    </form>
+@endauth
+
+
+    </ul>
+</nav>
+
 
           
           

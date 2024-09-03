@@ -45,7 +45,7 @@
             </div>
         </section>
 
- <section class="site-section">
+ <!-- <section class="site-section">
       <div class="container">
 
         <div class="row mb-5 justify-content-center">
@@ -94,7 +94,7 @@
      
 
       </div>
-</section>
+</section> -->
 
 
 
