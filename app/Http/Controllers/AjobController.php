@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Ajob;
 use App\Models\Applydetail;
+use App\Models\Category;
 
 
 class AjobController extends Controller
@@ -33,7 +34,8 @@ class AjobController extends Controller
 
 
     public function create(){
-        return view('ajob.create');
+        $categories = Category::all();
+        return view('ajob.create', compact('categories'));
     }
 
 
@@ -96,6 +98,7 @@ class AjobController extends Controller
             'job_location' => $validatedData['job_location'],
             'company_name' => $validatedData['company_name'],
             'provided_id' => Auth::user()->id,
+            'category_id' => $request->category_id,
             
         ]);
 
@@ -108,10 +111,15 @@ class AjobController extends Controller
 
     public function show($id){
 
+        
+
         $job = Ajob::findOrFail($id);
+
+        $related_jobs = Ajob::where('category_id', $job->category_id)->get();
+        $total_related_jobs = $related_jobs->count();
         if (Auth::check()) {
         $apply_detail = Applydetail::where('user_id', Auth::user()->id)->first();
-        return view('ajob.show', compact('job', 'apply_detail'));
+        return view('ajob.show', compact('job', 'apply_detail', 'related_jobs', 'total_related_jobs'));
         }
         
         return view('ajob.show', compact('job'));
@@ -178,5 +186,20 @@ class AjobController extends Controller
             // 'apply_detail' => $apply_detail,
         ]);
 
+    }
+
+
+
+    public function create_cat(){
+        return view('ajob.new-cat');
+    }
+
+
+    public function store_cat(Request $request){
+
+        $category = Category::create([
+            'name' => $request->name,
+        ]);
+        return view('ajob.show-cat');
     }
 }
