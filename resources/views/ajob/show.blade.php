@@ -28,8 +28,49 @@
             <h2>{{ $job->job_title }}</h2>
             <div>
               <span class="ml-0 mr-2 mb-2"><span class="icon-briefcase mr-2"></span>{{ $job->company_name }}</span>
+              
               <span class="m-2"><span class="icon-room mr-2"></span>{{ $job->job_location }}</span>
               <span class="m-2"><span class="icon-clock-o mr-2"></span><span class="text-primary">{{ $job->employment_status }}</span></span>
+              <div class="job-details">
+              <span class="icon-eye mr-2"></span><span id="view-count">{{ $job->views }}</span> viewed
+              <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- <script>
+
+
+
+        $(document).ready(function() {
+          new $.Zebra_Dialog('This job has been viewed {{ $job->views }} times', {
+              position: ["right - 20", "top + 20"],
+              title: "Custom positioning",
+              width: 460
+          });
+        });
+
+
+
+        $(document).ready(function() {
+        var jobId = {{ $job->id }};
+        $.ajax({
+            url: '{{ route('ajob-show', $job->id) }}',
+            method: 'POST',
+            data: {
+                _token: '{{ csrf_token() }}'
+            },
+            success: function(response) {
+                // Update the view count dynamically
+                $('#view-count').text(response.views);
+            },
+            error: function(xhr) {
+                console.error('Error updating view count:', xhr);
+            }
+        });
+    });
+
+        
+    </script> -->
+</div>
+
+              
             </div>
           </div>
         </div>
@@ -94,6 +135,104 @@
           </div>
         </div>
 
+        
+        
+          <h2> Comments: <i class="icon-comment"></i> {{ $job->userComments->count() }}</h2>
+          
+
+
+@foreach($job->userComments as $user)
+              <div class="card my-3">
+              <div class="card-body">
+                @php
+                $user_photo = $apply_details->where('user_id', $user->id)->first(); 
+                @endphp
+                
+              <img src="{{$user_photo->photo }}" width="40" class="rounded-circle">
+              <p>{{$user->pivot->comment}}</p>
+              <p>{{ $user->pivot->id }}</p>
+
+              @php
+                $comment_replies = $replies->where('comment_id', $user->pivot->id); 
+               
+              @endphp
+
+
+
+              @foreach($comment_replies as $reply)
+              <div class="card my-3">
+              <div class="card-body">
+               
+
+              @php
+                 
+                $user_reply_photo = $apply_details->where('user_id', $reply->user_id)->first();
+              @endphp
+                
+              <img src="{{ $user_reply_photo->photo }}" width="40" class="rounded-circle">
+              <p>{{$reply->reply}}</p>
+             
+
+
+              </div>
+              </div>
+
+              @endforeach
+
+
+
+
+
+
+
+
+              <div class = "row">
+        <div class="col-12">
+          <!-- <h2>Comment Section</h2> -->
+            <form action="{{route('ajob-reply')}}" method="POST">
+              @csrf
+              <div class="form-group">
+              <label for="exampleFormControlTextarea1">reply</label>
+              <input type="hidden" class="form-control" id="comment_id" name="comment_id" value="{{ $user->pivot->id }}">
+              <input type="hidden" class="form-control" id="user_id" name="user_id" value="{{ Auth::user()->id }}">
+              
+              <textarea class="form-control" id="reply" rows="3" name="reply"></textarea>
+              </div>
+              
+                <button name="submit" type="submit" class="btn btn-secondary float-right">
+                  <i class="icon-comment"></i> Reply
+                </button>
+              
+            </form>
+          </div>
+</div>
+
+              </div>
+              </div>
+              @endforeach
+
+
+
+        <div class = "row">
+        <div class="col-12">
+          <!-- <h2>Comment Section</h2> -->
+            <form action="{{ route('ajob-comment') }}" method="POST">
+              @csrf
+              <div class="form-group">
+              <label for="exampleFormControlTextarea1">Comment Here</label>
+              <input type="hidden" class="form-control" id="ajob_id" name="ajob_id" value="{{ $job->id }}">
+              <input type="hidden" class="form-control" id="user_id" name="user_id" value="{{ Auth::user()->id ?? '' }}">
+              <textarea class="form-control" id="comment" rows="3" name="comment"></textarea>
+              </div>
+              
+                <button name="submit" type="submit" class="btn btn-secondary float-right">
+                  <i class="icon-comment"></i> Comment
+                </button>
+              
+            </form>
+          </div>
+</div>
+
       </div>
       <div class="col-lg-4">
         <div class="bg-light p-3 border rounded mb-4">
@@ -124,7 +263,28 @@
   </div>
 
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://kit.fontawesome.com/2b1f19f7b1.js" crossorigin="anonymous"></script>
 </section>
+
+
+<!-- <section class="site-section">
+  <div class="container">
+    <div class="col-8">
+            <form action="{{ route('ajob-save') }}" method="POST">
+              @csrf
+              <div class="form-group">
+              <label for="exampleFormControlTextarea1">Example textarea</label>
+              <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+              </div>
+              
+                <button name="submit" type="submit" class="btn btn-secondary float-right">
+                  <i class="icon-comment"></i> Comment
+                </button>
+              
+            </form>
+          </div>
+  </div>
+</section> -->
 
 
 <section class="site-section">
@@ -177,5 +337,24 @@
 
       </div>
     </section>
+
+
+ 
+
+
+
+
+   
+  <!-- <script>
+        $(document).ready(function() {
+            new $.Zebra_Dialog('<strong>Zebra_Dialog</strong>, a small, compact, and highly configurable dialog box plugin for jQuery', {
+                'buttons': false,
+                'modal': false,
+                'position': ['right - 20', 'top + 20'],
+                'auto_close': 2000
+            });
+        });
+  </script> -->
+
 
 @endsection

@@ -19,6 +19,17 @@
 <link rel="stylesheet" href="{{ asset('css/animate.min.css') }}">
 <link rel="stylesheet" href="{{ asset('css/quill.snow.css') }}">
 <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+<!-- <link rel="stylesheet" href="{{ asset('css/flat/zebra_dialog.min.css') }}">
+<link rel="stylesheet" href="{{ asset('css/flat/zebra_dialog.css') }}"> -->
+
+<script src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
+<script>window.jQuery || document.write('<script src="path/to/jquery-3.5.0.js"><\/script>')</script>
+<script src="https://cdn.jsdelivr.net/npm/zebra_dialog@latest/dist/zebra_dialog.min.js"></script>
+<link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/zebra_dialog@latest/dist/css/flat/zebra_dialog.min.css">
+
+<script src="https://kit.fontawesome.com/2b1f19f7b1.js" crossorigin="anonymous"></script>
     
   </head>
   <body id="top">
@@ -193,6 +204,11 @@
 <script src="{{ asset('js/quill.min.js') }}"></script>
 <script src="{{ asset('js/bootstrap-select.min.js') }}"></script>
 <script src="{{ asset('js/custom.js') }}"></script>
+<script src="{{ asset('zebra_dialog.min.js') }}"></script>
+
+
+
+
 
 
      

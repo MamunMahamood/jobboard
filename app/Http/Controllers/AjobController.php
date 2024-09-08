@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Models\Ajob;
 use App\Models\Applydetail;
 use App\Models\Category;
+use App\Models\Reply;
 
 
 class AjobController extends Controller
@@ -114,15 +115,19 @@ class AjobController extends Controller
         
 
         $job = Ajob::findOrFail($id);
+         $job->incrementViews();
 
         $related_jobs = Ajob::where('category_id', $job->category_id)->get();
         $total_related_jobs = $related_jobs->count();
+        $apply_details = Applydetail::all();
+        $replies = Reply::all();
         if (Auth::check()) {
         $apply_detail = Applydetail::where('user_id', Auth::user()->id)->first();
-        return view('ajob.show', compact('job', 'apply_detail', 'related_jobs', 'total_related_jobs'));
+        
+        return view('ajob.show', compact('job', 'apply_detail', 'related_jobs', 'total_related_jobs', 'apply_details', 'replies'));
         }
         
-        return view('ajob.show', compact('job'));
+        return view('ajob.show', compact('job', 'apply_details', 'replies'));
     }
 
 
@@ -201,5 +206,34 @@ class AjobController extends Controller
             'name' => $request->name,
         ]);
         return view('ajob.show-cat');
+    }
+
+
+
+
+    public function store_comment( Request $request){
+        $job = Ajob::findorfail($request->ajob_id);
+
+        $job->userComments()->attach($request->user_id, ['comment' => $request->comment]);
+
+
+        return redirect()->back()->with('success', 'Job created successfully!');
+        
+
+    }
+
+    public function store_reply( Request $request){
+       
+
+        $user = Reply::create([
+            'comment_id' => $request->comment_id,
+            'reply' => $request->reply,
+            'user_id' => $request->user_id,
+        ]);
+
+
+        return redirect()->back()->with('success', 'Job created successfully!');
+        
+
     }
 }
