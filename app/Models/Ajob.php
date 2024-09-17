@@ -28,6 +28,7 @@ class Ajob extends Model
         'job_location',
         'provided_id',
         'category_id',
+        'views',
     ];
 
     public function users()
@@ -38,5 +39,19 @@ class Ajob extends Model
     public function applydetails()
     {
         return $this->belongsToMany(Applydetail::class);
+    }
+
+
+    public function incrementViews()
+    {
+        $this->increment('views');
+    }
+
+    public function userComments()
+    {
+        return $this->belongsToMany(User::class, 'ajob_user_comment')
+                ->withPivot('comment')
+                ->withPivot('id')
+                ->withTimestamps();
     }
 }

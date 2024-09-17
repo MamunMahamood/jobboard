@@ -57,5 +57,14 @@ class User extends Authenticatable
         return $this->hasOne(Applydetail::class);
     }
 
+
+    public function ajobComments()
+    {
+        return $this->belongsToMany(Ajob::class, 'ajob_user_comment')
+                ->withPivot('comment')
+                ->withPivot('id')
+                ->withTimestamps();
+    }
+
     
 }
